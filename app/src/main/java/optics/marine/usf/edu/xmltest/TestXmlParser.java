@@ -27,11 +27,14 @@ public class TestXmlParser {
     }
 
 
-
+    /*Build a way to paste together the URL for the images based on the basic url, the <this_request> tag and the
+      <image> tag.
+     */
 
     private List processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
         List menuEntries = new ArrayList();
-        List calendarParams = new ArrayList();
+        StartCal startDate;
+        EndCal endDate;
 
         xmlData.require(XmlPullParser.START_TAG, ns, "menu");
         while (xmlData.next() != XmlPullParser.END_TAG) {
@@ -45,7 +48,8 @@ public class TestXmlParser {
                     menuEntries.add(readEntry(xmlData));
                     break;
                 case "calendar":
-                    calendarParams.add(readCalendar(xmlData));
+                    startDate = readCalendarStart(xmlData);
+                    endDate = readCalendarEnd(xmlData);
                     break;
                 case "images":
 
@@ -205,6 +209,34 @@ public class TestXmlParser {
                     break;
             }
         }
-        return StartCal(day, month, year);
+        return new StartCal(day, month, year);
+    }
+
+    private EndCal readCalendarEnd(XmlPullParser parser) throws XmlPullParserException, IOException {
+        parser.require(XmlPullParser.START_TAG, ns, "calendar_end");
+        String day = null;
+        String month = null;
+        String year = null;
+        while (parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+            String name = parser.getName();
+            switch (name) {
+                case "day":
+                    day = readTitle(parser);
+                    break;
+                case "month":
+                    month = readLink(parser);
+                    break;
+                case "year":
+                    year = readLink(parser);
+                    break;
+                default:
+                    skip(parser);
+                    break;
+            }
+        }
+        return new EndCal(day, month, year);
     }
 }
