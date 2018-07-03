@@ -14,7 +14,7 @@ public class TestXmlParser {
     // We don't use namespaces
     private static final String ns = null;
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
+    public ProcessedData parse(InputStream in) throws XmlPullParserException, IOException {
         try {
             XmlPullParser parser = Xml.newPullParser();
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
@@ -31,10 +31,11 @@ public class TestXmlParser {
       <image> tag.
      */
 
-    private List processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
+    private ProcessedData processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
         List menuEntries = new ArrayList();
-        StartCal startDate;
-        EndCal endDate;
+        StartCal startDate = new StartCal("","","");
+        EndCal endDate = new EndCal("","","");
+        List<Pass> image = new ArrayList<>();
 
         xmlData.require(XmlPullParser.START_TAG, ns, "menu");
         while (xmlData.next() != XmlPullParser.END_TAG) {
@@ -52,18 +53,22 @@ public class TestXmlParser {
                     endDate = readCalendarEnd(xmlData);
                     break;
                 case "images":
-
+                    image = readImage(xmlData);
                     break;
                 default:
                     skip(xmlData);
             }
         }
-        return menuEntries;
+        return new ProcessedData(menuEntries, startDate, endDate, image);
     }
 
     /*
     ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     Lower Level Reading Methods
+
+    Each of these methods is used to read the text that is in the tags or the attributes into variables that
+    are returned and stored into the custom data types. Those will be returned to the higher data type in a
+    structure that will be easy to get all of the variables out of.
      */
 
     // Processes title tags in the feed.

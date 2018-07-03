@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Xml;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -31,19 +33,33 @@ public class MainActivity extends AppCompatActivity {
     private static final String QUERY_OPTIONS = "";
     private static final String QUERY_URL = SERVER_URL + QUERY_FILE + QUERY_OPTIONS;
 
+    //private TextView menuTitle = null;
+    //private TextView
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 
+        /*LinearLayout lView = new LinearLayout(this);
 
-        //QueryServer();
+        menuTitle = new TextView(this);
+        menuTitle.setText("put text here");
+
+        lView.addView(menuTitle);
+        setContentView(lView);*/
+
+        QueryServer();
     }
 
 
 
-    /*public void QueryServer(){
+
+
+    public void QueryServer(){
         Log.i(TAG, "Query server...");
         AsyncDownloader downloader = new AsyncDownloader();
         downloader.execute();
@@ -90,22 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         private List processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
-            List entries = new ArrayList();
 
-            xmlData.require(XmlPullParser.START_TAG, ns, "menu");
-            while (xmlData.next() != XmlPullParser.END_TAG) {
-                if (xmlData.getEventType() != XmlPullParser.START_TAG) {
-                    continue;
-                }
-                String name = xmlData.getName();
-                // Starts by looking for the entry tag
-                if (name.equals("entry")) {
-                    entries.add(readEntry(xmlData));
-                } else {
-                    skip(xmlData);
-                }
-            }
-            return entries;
 
 
 
@@ -149,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 publishProgress();
             }
             Log.i(TAG,"finished processing " + recordsFound + " records");
-            return recordsFound;
+            return recordsFound;*/
         }
         @Override
         protected void onProgressUpdate(String... values){
@@ -169,6 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }*/
+    }
 
 }
