@@ -68,12 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     //inner class for doing background download
-    private class AsyncDownloader extends AsyncTask<Object, String, Integer>{
+    private class AsyncDownloader extends AsyncTask<Object, String, ProcessedData>{
 
         @Override
-        protected Integer doInBackground(Object... objects) {
+        protected ProcessedData doInBackground(Object... objects) {
             XmlPullParser receivedData = tryDownloadingXmlData();
-            int recordsFound = tryParsingXmlData(receivedData);
+            ProcessedData recordsFound = tryParsingXmlData(receivedData);
             return recordsFound;
         }
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
 
-        private int tryParsingXmlData(XmlPullParser receivedData) {
+        private ProcessedData tryParsingXmlData(XmlPullParser receivedData) {
             if (receivedData != null){
                 try {
                     return processReceivedData(receivedData);
@@ -102,55 +102,11 @@ public class MainActivity extends AppCompatActivity {
                     Log.e(TAG, "IO Exception parsing XML", e);
                 }
             }
-            return 0;
+            return null;
         }
 
-        private List processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
+        private ProcessedData processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
 
-
-
-
-
-
-            /*int eventType = -1;
-            int recordsFound = 0;
-
-            String appId = "";
-            String itemId = "";
-            String timeStamp = "";
-            String data = "";
-
-            while (eventType != XmlResourceParser.END_DOCUMENT) {
-                String tagName = xmlData.getName();
-
-                switch (eventType) {
-                    case XmlResourceParser.START_TAG:
-                        if (tagName.equals("record")) {
-                            appId = xmlData.getAttributeValue(null, "appid");
-                            itemId = xmlData.getAttributeValue(null, "itemid");
-                            timeStamp = xmlData.getAttributeValue(null, "timestamp");
-                            data = "";
-                        }
-                        break;
-
-
-                    case XmlResourceParser.TEXT:
-                        data += xmlData.getText();
-                        break;
-                    case XmlPullParser.END_TAG:
-                        if (tagName.equals("record")) {
-                            recordsFound++;
-                            publishProgress(appId, itemId, data, timeStamp);
-                        }
-                        break;
-                }
-                eventType = xmlData.next();
-            }
-            if (recordsFound == 0){
-                publishProgress();
-            }
-            Log.i(TAG,"finished processing " + recordsFound + " records");
-            return recordsFound;*/
         }
         @Override
         protected void onProgressUpdate(String... values){
