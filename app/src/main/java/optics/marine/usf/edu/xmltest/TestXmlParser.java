@@ -53,7 +53,7 @@ public class TestXmlParser {
                     endDate = readCalendarEnd(xmlData);
                     break;
                 case "images":
-                    image = readImage(xmlData);
+                    image = readImages(xmlData);
                     break;
                 default:
                     skip(xmlData);
@@ -304,7 +304,7 @@ public class TestXmlParser {
      */
 
 
-    private List<Pass> readImage(XmlPullParser parser) throws XmlPullParserException, IOException{
+    private List<Pass> readImages(XmlPullParser parser) throws XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG, ns, "images");
         List<Pass> images = new ArrayList<>();
 
@@ -345,7 +345,7 @@ public class TestXmlParser {
                      attributes = readAttribute(parser);
                     break;
                 case "image":
-                    images.add(readImages(parser));
+                    images.add(readImage(parser));
                     break;
                 default:
                     skip(parser);
@@ -360,7 +360,7 @@ public class TestXmlParser {
         return new Pass(sensor, hour, minute, images);
     }
 
-    private MyImages readImages(XmlPullParser parser) throws XmlPullParserException, IOException{
+    private MyImages readImage(XmlPullParser parser) throws XmlPullParserException, IOException{
         parser.require(XmlPullParser.START_TAG, ns, "images");
 
         List<String> attributes = new ArrayList<>();
