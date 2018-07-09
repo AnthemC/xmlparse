@@ -4,6 +4,7 @@ package optics.marine.usf.edu.xmltest;
 
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +20,14 @@ import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import static optics.marine.usf.edu.xmltest.TestXmlParser.parse;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "xmltest";
@@ -32,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private static final String QUERY_FILE = "cgi-bin/md";
     private static final String QUERY_OPTIONS = "";
     private static final String QUERY_URL = SERVER_URL + QUERY_FILE + QUERY_OPTIONS;
+
+    TextView display;
+    private Resources resources;
+    private String output;
 
     //private TextView menuTitle = null;
     //private TextView
@@ -43,6 +52,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        display = (TextView)findViewById(R.id.info);
+
+
+        XmlPullParserFactory pullParserFactory;
+        try {
+            pullParserFactory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = pullParserFactory.newPullParser();
+
+            InputStream in_s = getApplicationContext().getAssets().open("opticsmenu");
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in_s, null);
+
+            parseXML(parser);
+
+        } catch (XmlPullParserException e) {
+
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
 
         /*LinearLayout lView = new LinearLayout(this);
 
@@ -52,14 +83,48 @@ public class MainActivity extends AppCompatActivity {
         lView.addView(menuTitle);
         setContentView(lView);*/
 
-        QueryServer();
+        //QueryServer();
+    }
+
+    private void parseXML(XmlPullParser parser) throws XmlPullParserException,IOException
+    {
+        Log.i("inMethod", "in parseXML");
+        ProcessedData products = null;
+        int eventType = parser.getEventType();
+        ProcessedData currentProduct = null;
+
+        products = parse(parser);
+
+        Log.i("end", "ending of parseXML");
+        printProducts(products);
+    }
+
+    private void printProducts(ProcessedData products)
+    {
+        Log.i("start printProducts", "in printProducts");
+        String content = "";
+        //Iterator<ProcessedData> it = products.iterator();
+        //while(it.hasNext())
+        //{
+            //ProcessedData currProduct  = it.next();
+            content = content + "nnnProduct: " +  currProduct.name + "\n";
+            content = content + "Quantity: " +  currProduct.quantity + "\n";
+            content = content + "Color: " +  currProduct.color + "\n";
+
+        //}
+
+
+        Log.i("content", content);
+
+        Log.i("end", "end of printProducts");
+        display.setText(content);
     }
 
 
 
 
 
-    public void QueryServer(){
+    /*public void QueryServer(){
         Log.i(TAG, "Query server...");
         AsyncDownloader downloader = new AsyncDownloader();
         downloader.execute();
@@ -126,6 +191,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
-    }
+    }*/
 
 }

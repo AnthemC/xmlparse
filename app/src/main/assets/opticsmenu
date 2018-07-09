@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<response>
+    <server>optics.marine.usf.edu</server>
+    <menu>
+        <menu_top level="1" name="sdp">
+            <title>Satellite Data Products</title>
+            <menu_region level="2" name="region1">
+                <title>Caribbean</title>
+                <roi level="3" name="ecarib">
+                    <title>E. Caribbean</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=ECARIB</link>
+                </roi>
+                <roi level="3" name="jamaica">
+                    <title>Jamaica</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=JAMAICA</link>
+                </roi>
+                <roi level="3" name="nwcuba">
+                    <title>N.W. Cuba</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=NWCUBA</link>
+                </roi>
+                <roi level="3" name="panama">
+                    <title>Panama</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=PANAMA</link>
+                </roi>
+                <roi level="3" name="yucatan">
+                    <title>Yucatan</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=YUCATAN</link>
+                </roi>
+            </menu_region>
+            <menu_region level="2" name="region2">
+                <title>East Asia</title>
+                <roi level="3" name="bohai">
+                    <title>Bohai</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=BOHAI</link>
+                </roi>
+                <roi level="3" name="ecs">
+                    <title>East China Sea</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=ECS</link>
+                </roi>
+                <roi level="3" name="qindgdao">
+                    <title>Qingdao</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=QINGDAO</link>
+                </roi>
+                <roi level="3" name="taihu">
+                    <title>Taihu</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=TAIHU</link>
+                </roi>
+                <roi level="3" name="tws">
+                    <title>Taiwan Straight</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=TWS</link>
+                </roi>
+                <roi level="3" name="ys_ecs">
+                    <title>Yellow Sea - East China Sea</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=YS_ECS</link>
+                </roi>
+                <roi level="3" name="zhejiang">
+                    <title>Zhejiang</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=ZHEJIANG</link>
+                </roi>
+            </menu_region>
+            <menu_region level="2" name="region3">
+                <title>North America</title>
+                <roi level="3" name="bermuda">
+                    <title>Bermuda</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=BERMUDA</link>
+                </roi>
+                <roi level="3" name="bigbend">
+                    <title>Big Bend FL</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=BIGBEND</link>
+                </roi>
+                <roi level="3" name="cape_cod">
+                    <title>Cape Cod Bay</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=CAPE_COD</link>
+                </roi>
+                <roi level="3" name="cbay">
+                    <title>Chesapeake Bay</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=CBAY</link>
+                </roi>
+                <roi level="3" name="corpus">
+                    <title>Corpus Christi TX</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=CORPUS</link>
+                </roi>
+                <roi level="3" name="cwfl" selected="1">
+                    <title>C. West Florida</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=CWFL</link>
+                </roi>
+                <roi level="3" name="erie">
+                    <title>Lake Erie</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=ERIE</link>
+                </roi>
+                <roi level="3" name="flkeys">
+                    <title>Florida Keys</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=FLKEYS</link>
+                </roi>
+                <roi level="3" name="galv">
+                    <title>Galveston</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=GALV</link>
+                </roi>
+                <roi level="3" name="gbay">
+                    <title>Green Bay</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=GBAY</link>
+                </roi>
+                <roi level="3" name="gcoos">
+                    <title>GCOOS</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=GCOOS</link>
+                </roi>
+                <roi level="3" name="glakes">
+                    <title>Great Lakes</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=GLAKES</link>
+                </roi>
+                <roi level="3" name="mbay">
+                    <title>Mobile Bay AL</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=MBAY</link>
+                </roi>
+                <roi level="3" name="mriver">
+                    <title>Mississippi River</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=MRIVER</link>
+                </roi>
+                <roi level="3" name="saginaw">
+                    <title>Saginaw</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=SAGINAW</link>
+                </roi>
+                <roi level="3" name="se_fl">
+                    <title>SE FL Shelf</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=SE_FL</link>
+                </roi>
+                <roi level="3" name="secoora">
+                    <title>SECOORA</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=SECOORA</link>
+                </roi>
+                <roi level="3" name="wgom">
+                    <title>W. Gulf of Mexico</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=WGOM</link>
+                </roi>
+            </menu_region>
+            <menu_region level="2" name="region4">
+                <title>Other</title>
+                <roi level="3" name="c_atlantic">
+                    <title>C. Atlantic</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=C_ATLANTIC</link>
+                </roi>
+                <roi level="3" name="cnmi">
+                    <title>N. Mariana Islands</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=CNMI</link>
+                </roi>
+                <roi level="3" name="persian_gulf">
+                    <title>Persian Gulf</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=PERSIAN_GULF</link>
+                </roi>
+                <roi level="3" name="samoa">
+                    <title>Samoa</title>
+                    <link>http://optics.marine.usf.edu/cgi-bin/md?roi=SAMOA</link>
+                </roi>
+            </menu_region>
+        </menu_top>
+    </menu>
+    <calendar>
+        <calendar_start type="start" name="cwfl">
+            <day>9</day>
+            <month>1</month>
+            <year>2011</year>
+        </calendar_start>
+        <calendar_end type="end" name="cwfl">
+            <day>9</day>
+            <month>7</month>
+            <year>2018</year>
+        </calendar_end>
+    </calendar>
+    <this_request>
+        <roi>CWFL</roi>
+        <year>2018</year>
+        <doy>190</doy>
+        <server_path>/subscription/modis/CWFL/2018/daily/190/</server_path>
+    </this_request>
+    <images>
+        <pass sensor="terra" hour="03" minute="55">
+            <image type="sst" png400="T20181900355.QKM.CWFL.PASS.L3D.SST.400.png" pngfull="T20181900355.QKM.CWFL.PASS.L3D.SST.png">T20181900355.QKM.CWFL.PASS.L3D.SST.200.png</image>
+            <image type="sst4" png400="T20181900355.QKM.CWFL.PASS.L3D.SST4.400.png" pngfull="T20181900355.QKM.CWFL.PASS.L3D.SST4.png">T20181900355.QKM.CWFL.PASS.L3D.SST4.200.png</image>
+        </pass>
+        <pass sensor="aqua" hour="06" minute="35">
+            <image type="sst" png400="A20181900635.QKM.CWFL.PASS.L3D.SST.400.png" pngfull="A20181900635.QKM.CWFL.PASS.L3D.SST.png">A20181900635.QKM.CWFL.PASS.L3D.SST.200.png</image>
+            <image type="sst4" png400="A20181900635.QKM.CWFL.PASS.L3D.SST4.400.png" pngfull="A20181900635.QKM.CWFL.PASS.L3D.SST4.png">A20181900635.QKM.CWFL.PASS.L3D.SST4.200.png</image>
+        </pass>
+        <pass sensor="aqua" hour="08" minute="10">
+            <image type="sst" png400="A20181900810.QKM.CWFL.PASS.L3D.SST.400.png" pngfull="A20181900810.QKM.CWFL.PASS.L3D.SST.png">A20181900810.QKM.CWFL.PASS.L3D.SST.200.png</image>
+            <image type="sst4" png400="A20181900810.QKM.CWFL.PASS.L3D.SST4.400.png" pngfull="A20181900810.QKM.CWFL.PASS.L3D.SST4.png">A20181900810.QKM.CWFL.PASS.L3D.SST4.200.png</image>
+        </pass>
+    </images>
+</response>
