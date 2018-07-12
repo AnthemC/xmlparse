@@ -8,7 +8,7 @@ public class ProcessedData {
     private EndCal CalEnd;
     private List<Pass> image;
 
-    public ProcessedData(List menuEntries, StartCal CalStart, EndCal CalEnd, List<Pass> image){
+    public ProcessedData(List<MenuItem> menuEntries, StartCal CalStart, EndCal CalEnd, List<Pass> image){
         this.CalEnd = CalEnd;
         this.CalStart = CalStart;
         this.menuEntries = menuEntries;

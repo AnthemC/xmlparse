@@ -1,23 +1,39 @@
 package optics.marine.usf.edu.xmltest;
 
+import android.util.Log;
+import android.util.Xml;
+
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class TestXmlParser {
     // We don't use namespaces
     private static final String ns = null;
 
-    public static ProcessedData parse(XmlPullParser parser) throws XmlPullParserException, IOException {
+    public static ProcessedData parse(InputStream in) throws XmlPullParserException, IOException {
+        Log.i("parse", "in read parse");
         try {
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in, null);
+            parser.nextTag();
+
             return processReceivedData(parser);
-        }catch (IOException e) {
-            e.printStackTrace();
+        }finally {
+            in.close();
         }
-        return null;
+
+        /*catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        //return null;
     }
 
 
@@ -26,33 +42,44 @@ public class TestXmlParser {
      */
 
     private static ProcessedData processReceivedData(XmlPullParser xmlData) throws IOException, XmlPullParserException {
-        List menuEntries = new ArrayList();
+        Log.i("processRecievedData", "in processedRevievedData");
+
+        List<MenuItem> menuEntries = new ArrayList();
         StartCal startDate = new StartCal("","","");
         EndCal endDate = new EndCal("","","");
         List<Pass> image = new ArrayList<>();
 
-        xmlData.require(XmlPullParser.START_TAG, ns, "menu");
+        //int eventType = xmlData.getEventType();
+
+        xmlData.require(XmlPullParser.START_TAG, ns, "response");
+        Log.i("processRecievedData", "after .require");
         while (xmlData.next() != XmlPullParser.END_TAG) {
+            //Log.i("while loop", "in while loop in processData");
             if (xmlData.getEventType() != XmlPullParser.START_TAG) {
+                Log.i("continue", "in continue");
                 continue;
             }
             String name = xmlData.getName();
+            Log.i("name", name);
             // Starts by looking for the entry tag
-            switch (name) {
-                case "menu_top":
-                    menuEntries.add(readEntry(xmlData));
-                    break;
-                case "calendar":
-                    startDate = readCalendarStart(xmlData);
-                    endDate = readCalendarEnd(xmlData);
-                    break;
-                case "images":
-                    image = readImages(xmlData);
-                    break;
-                default:
-                    skip(xmlData);
+            if(name.equals("menu_top")) {
+                Log.i("processIf", "in read the readEntry call in processRecievedData");
+                menuEntries.add(readEntry(xmlData));
+            }else if (name.equals("calendar")) {
+                startDate = readCalendarStart(xmlData);
+                endDate = readCalendarEnd(xmlData);
+            }else if (name.equals("images")) {
+                image = readImages(xmlData);
+            }else {
+                skip(xmlData);
             }
         }
+        /*ProcessedData processedData = new ProcessedData(){{
+           setCalEnd(endDate);
+           setCalStart(startDate);
+           setImage(image);
+           setMenuEntries(menuEntries);
+        }};*/
         return new ProcessedData(menuEntries, startDate, endDate, image);
     }
 
@@ -66,7 +93,7 @@ public class TestXmlParser {
      */
 
     // Processes title tags in the feed.
-    private static String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
+/*    private static String readTitle(XmlPullParser parser) throws IOException, XmlPullParserException {
         parser.require(XmlPullParser.START_TAG, ns, "title");
         String title = readText(parser);
         parser.require(XmlPullParser.END_TAG, ns, "title");
@@ -87,7 +114,7 @@ public class TestXmlParser {
         }
         parser.require(XmlPullParser.END_TAG, ns, "link");
         return link;
-    }
+    }*/
 
     // For the tags title and summary, extracts their text values.
     private static String readText(XmlPullParser parser) throws IOException, XmlPullParserException {
@@ -150,7 +177,8 @@ public class TestXmlParser {
 
 
     private static MenuItem readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "menu");
+        Log.i("readEntry", "in read entry");
+        //parser.require(XmlPullParser.START_TAG, ns, "menu");
         String title = null;
         List subItems = new ArrayList<>();
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -160,7 +188,7 @@ public class TestXmlParser {
             String name = parser.getName();
             switch (name) {
                 case "title":
-                    title = readTitle(parser);
+                    title = readText(parser);
                     break;
                 case "menu_region":
                     subItems.add(readRegion(parser));
@@ -174,7 +202,7 @@ public class TestXmlParser {
     }
 
     private static MenuRegion readRegion(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "menu_region");
+        //parser.require(XmlPullParser.START_TAG, ns, "menu_region");
         String title = null;
         List subItems = new ArrayList<>();
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -182,23 +210,20 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "title":
-                    title = readTitle(parser);
-                    break;
-                case "menu_region":
-                    subItems.add(readROI(parser));
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if(name.equals("title")) {
+                title = readText(parser);
+            }else if (name.equals("menu_region")) {
+                subItems.add(readROI(parser));
+            }else {
+                skip(parser);
             }
         }
         return new MenuRegion(title, subItems);
     }
 
     private static ROI readROI(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "roi");
+        Log.i("ROI", "in readROI");
+        //parser.require(XmlPullParser.START_TAG, ns, "roi");
         String title = null;
         String link = null;
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -206,16 +231,12 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "title":
-                    title = readTitle(parser);
-                    break;
-                case "link":
-                    link = readLink(parser);
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if (name.equals("title")) {
+                title = readText(parser);
+            }else if (name.equals("link")) {
+                link = readText(parser);
+            }else{
+                skip(parser);
             }
         }
         return new ROI(title, link);
@@ -232,7 +253,7 @@ public class TestXmlParser {
      */
 
     private static StartCal readCalendarStart(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "calendar_start");
+        //parser.require(XmlPullParser.START_TAG, ns, "calendar_start");
         String day = null;
         String month = null;
         String year = null;
@@ -241,26 +262,21 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "day":
-                    day = readText(parser);
-                    break;
-                case "month":
-                    month = readText(parser);
-                    break;
-                case "year":
-                    year = readText(parser);
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if (name.equals("day")) {
+                day = readText(parser);
+            }else if (name.equals("month")) {
+                month = readText(parser);
+            }else if (name.equals("year")) {
+                year = readText(parser);
+            }else {
+                skip(parser);
             }
         }
         return new StartCal(day, month, year);
     }
 
     private static EndCal readCalendarEnd(XmlPullParser parser) throws XmlPullParserException, IOException {
-        parser.require(XmlPullParser.START_TAG, ns, "calendar_end");
+        //parser.require(XmlPullParser.START_TAG, ns, "calendar_end");
         String day = null;
         String month = null;
         String year = null;
@@ -269,19 +285,14 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "day":
-                    day = readText(parser);
-                    break;
-                case "month":
-                    month = readText(parser);
-                    break;
-                case "year":
-                    year = readText(parser);
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if (name.equals("day")) {
+                day = readText(parser);
+            }else if (name.equals("month")) {
+                month = readText(parser);
+            }else if (name.equals("year")) {
+                year = readText(parser);
+            }else {
+                skip(parser);
             }
         }
         return new EndCal(day, month, year);
@@ -299,7 +310,7 @@ public class TestXmlParser {
 
 
     private static List<Pass> readImages(XmlPullParser parser) throws XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, ns, "images");
+        //parser.require(XmlPullParser.START_TAG, ns, "images");
         List<Pass> images = new ArrayList<>();
 
         while (parser.next() != XmlPullParser.START_TAG){
@@ -307,20 +318,17 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "pass":
-                    images.add(readPass(parser));
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if(name.equals("pass")) {
+                images.add(readPass(parser));
+            }else {
+                skip(parser);
             }
         }
         return images;
     }
 
     private static Pass readPass(XmlPullParser parser) throws XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, ns, "pass");
+        //parser.require(XmlPullParser.START_TAG, ns, "pass");
 
         List<String> attributes = new ArrayList<>();
         String sensor = "";
@@ -334,16 +342,12 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "pass":
-                     attributes = readAttribute(parser);
-                    break;
-                case "image":
-                    images.add(readImage(parser));
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if(name.equals("pass")) {
+                attributes = readAttribute(parser);
+            }else if (name.equals("images")) {
+                images.add(readImage(parser));
+            }else {
+                skip(parser);
             }
         }
 
@@ -355,7 +359,7 @@ public class TestXmlParser {
     }
 
     private static MyImages readImage(XmlPullParser parser) throws XmlPullParserException, IOException{
-        parser.require(XmlPullParser.START_TAG, ns, "images");
+        //parser.require(XmlPullParser.START_TAG, ns, "images");
 
         List<String> attributes = new ArrayList<>();
         String contents = "";
@@ -365,14 +369,11 @@ public class TestXmlParser {
                 continue;
             }
             String name = parser.getName();
-            switch (name) {
-                case "images":
-                    attributes = readAttribute(parser);
-                    contents = readText(parser);
-                    break;
-                default:
-                    skip(parser);
-                    break;
+            if (name.equals("images")) {
+                attributes = readAttribute(parser);
+                contents = readText(parser);
+            }else {
+                skip(parser);
             }
         }
         return new MyImages(attributes, contents);

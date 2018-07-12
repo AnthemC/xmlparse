@@ -64,13 +64,9 @@ public class MainActivity extends AppCompatActivity {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
             parser.setInput(in_s, null);
 
-            parseXML(parser);
-
-        } catch (XmlPullParserException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
+            //parseXML(parser);
+            parseXML(in_s);
+        } catch (XmlPullParserException | IOException e) {
             e.printStackTrace();
         }
 
@@ -86,11 +82,11 @@ public class MainActivity extends AppCompatActivity {
         //QueryServer();
     }
 
-    private void parseXML(XmlPullParser parser) throws XmlPullParserException,IOException
+    private void parseXML(InputStream parser) throws XmlPullParserException,IOException
     {
         Log.i("inMethod", "in parseXML");
         ProcessedData products = null;
-        int eventType = parser.getEventType();
+        //int eventType = parser.getEventType();
         ProcessedData currentProduct = null;
 
         products = parse(parser);
@@ -103,15 +99,20 @@ public class MainActivity extends AppCompatActivity {
     {
         Log.i("start printProducts", "in printProducts");
         String content = "";
-        //Iterator<ProcessedData> it = products.iterator();
-        //while(it.hasNext())
-        //{
-            //ProcessedData currProduct  = it.next();
-            content = content + "nnnProduct: " +  currProduct.name + "\n";
-            content = content + "Quantity: " +  currProduct.quantity + "\n";
-            content = content + "Color: " +  currProduct.color + "\n";
+        List<MenuItem> menuItems = products.getMenuEntries();
+        for(int i = 0; i < menuItems.size(); i++) {
+            content = content + "Menu Item Title: " + menuItems.get(i).getTitleMI() + "\n";
+            List<MenuRegion> menuRegion = menuItems.get(i).getSubItems();
+            for (int j = 0; j < menuRegion.size(); j++){
+                content = content + "Menu Region Title: " + menuRegion.get(i).getTitleMR() + "\n";
+                List<ROI> roi = menuRegion.get(i).getSubItems();
+                for (int k = 0; k < roi.size(); k++){
+                    content = content + "ROI Title: " + roi.get(i).getTitleROI() + "\n";
+                    content = content + "ROI Link: " + roi.get(i).getLink() + "\n";
+                }
+            }
+        }
 
-        //}
 
 
         Log.i("content", content);
